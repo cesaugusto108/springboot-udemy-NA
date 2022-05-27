@@ -1,6 +1,7 @@
 package cesaugusto108.course.entities;
 
 import cesaugusto108.course.entities.primary_keys.OrderItemPK;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -17,12 +18,13 @@ public class OrderItem implements Serializable {
     private static final long serialVersionUID = 3777452774629573695L;
 
     @EmbeddedId
-    private OrderItemPK id;
+    private final OrderItemPK id = new OrderItemPK();
 
     private Integer quantity;
     private Double price;
 
     public OrderItem() {
+
     }
 
     public OrderItem(Order order, Product product, Integer quantity, Double price) {
@@ -32,20 +34,21 @@ public class OrderItem implements Serializable {
         this.price = price;
     }
 
+    @JsonIgnore
     public Order getOrder() {
         return id.getOrder();
     }
 
-    public void setOrder() {
-        id.setOrder(getOrder());
+    public void setOrder(Order order) {
+        id.setOrder(order);
     }
 
     public Product getProduct() {
         return id.getProduct();
     }
 
-    public void setProduct() {
-        id.setProduct(getProduct());
+    public void setProduct(Product product) {
+        id.setProduct(product);
     }
 
     public Integer getQuantity() {
