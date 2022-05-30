@@ -18,7 +18,7 @@ public class Order implements Serializable {
     @Serial
     private static final long serialVersionUID = -4887883384008294654L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
@@ -91,6 +91,16 @@ public class Order implements Serializable {
 
     public void setPayment(Payment payment) {
         this.payment = payment;
+    }
+
+    public Double getTotal() {
+        double sum = 0.0;
+
+        for (OrderItem item : items) {
+            sum += item.getSubTotal();
+        }
+
+        return sum;
     }
 
     @Override
